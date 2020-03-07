@@ -9,9 +9,17 @@ pub use utils::Config;
 fn main() {
     let mut cfg = Config::default();
     cfg.syntax = String::from("rs");
-    match cfg.render_terminal("pub struct Wow { hi: u64 }\nfn blah() -> u64 {}") {
+    const TEST: &str = include_str!("main.rs");
+    match cfg.render_latex(TEST) {
         Ok(o) => {
-            println!("Render Terminal");
+            println!("Render LaTeX:");
+            println!("{}", o)
+        }
+        Err(e) => println!("Error: {:?}", e),
+    };
+    match cfg.render_terminal(TEST) {
+        Ok(o) => {
+            println!("Render Terminal:");
             println!("{}", o)
         }
         Err(e) => println!("Error: {:?}", e),
