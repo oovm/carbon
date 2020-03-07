@@ -38,7 +38,7 @@ impl Config {
         let theme = THEME_SET.themes.get(&self.theme).ok_or(CarbonError::no_theme(self))?;
         // The main process of the program
         let mut h = HighlightLines::new(syntax, theme);
-        let mut out = String::with_capacity(2 * input.len());
+        let mut out = String::with_capacity(10 * input.len());
         for line in LinesWithEndings::from(input) {
             // LinesWithEndings enables use of newlines mode
             let ranges: Vec<(Style, &str)> = h.highlight(line, set);
@@ -48,23 +48,24 @@ impl Config {
         }
         return Ok(out);
     }
-}
-
-#[test]
-fn html() {
-    let (ps, ts) = load();
-    let cfg = Config::default();
-    let s = "pub struct Wow { hi: u64 }\nfn blah() -> u64 {}\n";
-    let style = "
+    pub fn render_html(&self, input: &str) -> Result<String, CarbonError> {
+        let all = SYNTAX_SET.deref();
+        let syntax = all.find_syntax_by_extension(&self.syntax).ok_or(CarbonError::no_theme(self))?;
+        let theme = THEME_SET.themes.get(&self.theme).ok_or(CarbonError::no_theme(self))?;
+        // The main process of the program
+        let mut out = String::with_capacity(25 * input.len());
+        let style = "
         pre {
             font-size:13px;
             font-family: Consolas, \"Liberation Mono\", Menlo, Courier, monospace;
         }";
-    println!("<head><title>{}</title><style>{}</style></head>", s, style);
-    let theme = &ts.themes[&cfg.theme];
-    let c = theme.settings.background.unwrap_or(Color::WHITE);
-    println!("<body style=\"background-color:#{:02x}{:02x}{:02x};\">\n", c.r, c.g, c.b);
-    let html = highlighted_html_for_string(s, &ps, theme).unwrap();
-    println!("{}", html);
-    println!("</body>");
+        out.push_str(&format!("<head><title>{}</title><style>{}</style></head>", input, style));
+
+        let c = theme.settings.background.unwrap_or(Color::WHITE);
+        out.push_str(&format!("<body style=\"background-color:#{:02x}{:02x}{:02x};\">\n", c.r, c.g, c.b));
+        let html = highlighted_html_for_string(input, all, syntax, theme);
+        out.push_str(&format!("{}", html));
+        out.push_str(&format!("</body>"));
+        return Ok(out);
+    }
 }
