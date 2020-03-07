@@ -1,4 +1,136 @@
-lazy_static::lazy_static! {
-    pub static ref SYNTAX_SET: SyntaxSet = from_binary(include_bytes!("languages.dump"));
-    pub static ref THEME_SET: ThemeSet = from_binary(include_bytes!("themes.dump"));
-}
+# Carbon
+## Supported languages (115)
+- **ActionScript:** as
+- **AppleScript:** applescript, script editor
+- **ASP:** asa
+- **Assembly x86 (NASM):** asm, inc, nasm
+- **Batch File:** bat, cmd
+- **BibTeX:** bib
+- **Bourne Again Shell (bash):** .bash_aliases, .bash_completions, .bash_functions, .bash_login, .bash_logout, .bash_profile, .bash_variables, .bashrc, .profile, .textmate_init, .zshrc, bash, fish, sh, zsh
+- **C:** c, h
+- **C#:** cs, csx
+- **C++:** C, c++, cc, cp, cpp, cxx, h, h++, hh, hpp, hxx, inl, ipp
+- **Clojure:** clj
+- **CMake:** CMakeLists.txt, cmake
+- **CMake C Header:** h.in
+- **CMake C++ Header:** h++.in, hh.in, hpp.in, hxx.in
+- **CMakeCache:** CMakeCache.txt
+- **Crystal:** cr
+- **CSS:** css, css.erb, css.liquid
+- **D:** d, di
+- **Dart:** dart
+- **Diff:** diff, patch
+- **Elixir:** ex, exs
+- **Elm:** elm
+- **Erlang:** Emakefile, emakefile, erl, hrl
+- **fsharp:** fs
+- **Generic Config:** .dircolors, .gitattributes, .gitignore, .gitmodules, .inputrc, Doxyfile, cfg, conf, config, dircolors, gitattributes, gitignore, gitmodules, ini, inputrc, mak, mk, pro
+- **Git Attributes:** .gitattributes, attributes, gitattributes
+- **Git Commit:** COMMIT_EDITMSG, MERGE_MSG, TAG_EDITMSG
+- **Git Config:** .gitconfig, .gitmodules, gitconfig
+- **Git Ignore:** .gitignore, exclude, gitignore
+- **Git Link:** .git
+- **Git Log:** gitlog
+- **Git Rebase Todo:** git-rebase-todo
+- **Go:** go
+- **Graphviz (DOT):** DOT, dot, gv
+- **Groovy:** Jenkinsfile, gradle, groovy, gvy
+- **Handlebars:** handlebars, handlebars.html, hbr, hbrs, hbs, hdbs, hjs, mu, mustache, rac, stache, template, tmpl
+- **Haskell:** hs
+- **HTML:** htm, html, shtml, xhtml
+- **HTML (ASP):** asp
+- **HTML (Erlang):** yaws
+- **HTML (Rails):** erb, html.erb, rails, rhtml
+- **HTML (Tcl):** adp
+- **Java:** bsh, java
+- **Java Properties:** properties
+- **Java Server Page (JSP):** jsp
+- **JavaScript:** htc, js
+- **JavaScript (Rails):** js.erb
+- **Jinja2:** j2, jinja2
+- **JSON:** json, sublime-build, sublime-color-scheme, sublime-commands, sublime-completions, sublime-keymap, sublime-macro, sublime-menu, sublime-mousemap, sublime-project, sublime-settings, sublime-theme
+- **Julia:** jl
+- **Kotlin:** kt, kts
+- **LaTeX:** ltx, tex
+- **Less:** css.less, less
+- **Linker Script:** ld
+- **Lisp:** cl, clisp, el, fasl, l, lisp, lsp, mud, scm, ss
+- **Literate Haskell:** lhs
+- **Lua:** lua
+- **Makefile:** GNUmakefile, Makefile, Makefile.am, Makefile.in, OCamlMakefile, mak, make, makefile, makefile.am, makefile.in, mk
+- **Markdown:** markdn, markdown, md, mdown
+- **MATLAB:** matlab
+- **MiniZinc (MZN):** dzn, mzn
+- **NAnt Build File:** build
+- **Nim:** nim, nims
+- **Nix:** nix
+- **Objective-C:** h, m
+- **Objective-C++:** M, h, mm
+- **OCaml:** ml, mli
+- **OCamllex:** mll
+- **OCamlyacc:** mly
+- **Pascal:** dpr, p, pas
+- **Perl:** PL, pl, pm, pod, t
+- **PHP:** php, php3, php4, php5, php7, phps, phpt, phtml
+- **Plain Text:** txt
+- **PowerShell:** ps1, psd1, psm1
+- **Python:** SConscript, SConstruct, Sconstruct, Snakefile, cpy, gyp, gypi, pxd, pxd.in, pxi, pxi.in, py, py3, pyi, pyw, pyx, pyx.in, rpy, sconstruct, wscript
+- **R:** R, Rprofile, S, r, s
+- **Rd (R Documentation):** rd
+- **Reason:** re, rei
+- **Regular Expression:** re
+- **reStructuredText:** rest, rst
+- **Ruby:** Appfile, Appraisals, Berksfile, Brewfile, Cheffile, Deliverfile, Fastfile, Gemfile, Guardfile, Rakefile, Rantfile, Scanfile, Snapfile, Thorfile, Vagrantfile, capfile, cgi, config.ru, fcgi, gemspec, irbrc, jbuilder, podspec, prawn, rabl, rake, rb, rbx, rjs, ruby.rail, simplecov, thor
+- **Ruby Haml:** haml, sass
+- **Ruby on Rails:** builder, rxml
+- **Rust:** rs
+- **Scala:** sbt, scala
+- **SQL:** ddl, dml, sql
+- **SQL (Rails):** erbsql, sql.erb
+- **SWI-Prolog:** pro
+- **Swift:** swift
+- **Tcl:** tcl
+- **TeX:** cls, sty
+- **Textile:** textile
+- **TOML:** tml, toml
+- **TypeScript:** ts
+- **TypeScriptReact:** tsx
+- **VimL:** vim
+- **XML:** dtml, opml, rss, svg, tld, xml, xsd, xslt
+- **YAML:** sublime-syntax, yaml, yml
+## Supported themes (35)
+- **1337:** 1337
+- **Agola Dark:** agola-dark
+- **Ascetic White:** ascetic-white
+- **Axar:** axar
+- **ayu:** ayu-dark
+- **ayu:** ayu-light
+- **ayu:** ayu-mirage
+- **Base16 Ocean Dark:** base16-ocean-dark
+- **Base16 Ocean Light:** base16-ocean-light
+- **BBEdit:** bbedit
+- **Boron:** boron
+- **Charcoal:** charcoal
+- **Cheerfully Light:** cheerfully-light
+- **Classic Modified:** classic-modified
+- **Demain:** demain
+- **Dimmed Fluid:** dimmed-fluid
+- **Dracula:** dracula
+- **Gray Matter Dark:** gray-matter-dark
+- **gruvbox:** gruvbox-dark
+- **gruvbox:** gruvbox-light
+- **IDLE:** idle
+- **GitHub:** inspired-github
+- **IR_White:** ir-white
+- **Kronuz:** kronuz
+- **Material-Theme-Darker:** material-dark
+- **Material-Theme-Lighter:** material-light
+- **Monokai:** monokai
+- **One Dark:** one-dark
+- **Solarized (dark):** solarized-dark
+- **Solarized (light):** solarized-light
+- **Subway: Madrid:** subway-madrid
+- **Subway: Moscow:** subway-moscow
+- **Tomorrow:** Tomorrow
+- **Visual Studio Dark:** visual-studio-dark
+- **zenburn:** zenburn

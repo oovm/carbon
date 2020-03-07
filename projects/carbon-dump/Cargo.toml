@@ -1,14 +1,18 @@
 [package]
 name = "carbon-dump"
-version = "0.0.0"
-authors = ["Finn <finn.bcd@gmail.com>"]
-license = "CC0-1.0"
+version = "1.1.0"
+authors = ["Aster <192607617@qq.com>"]
+description = "..."
+repository = "https://github.com/GalAster/carbon-rs"
+readme = "README.md"
+license = "MPL-2.0"
 edition = "2018"
-
-description = "Experimental Moss interpreter"
-keywords = ["scripting", "language"]
-homepage = "https://johnbsmith.github.io/moss/home.htm"
-repository = "https://github.com/JohnBSmith/moss"
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "languages.dump",
+    "themes.dump",
+]
 
 
 [dependencies]

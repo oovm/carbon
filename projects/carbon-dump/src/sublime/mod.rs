@@ -1,20 +1,39 @@
-use std::collections::HashMap;
-use std::collections::HashSet;
-use std::iter::FromIterator;
-use syntect::dumps::*;
-use syntect::highlighting::ThemeSet;
-use syntect::parsing::{SyntaxSetBuilder, SyntaxSet};
+use std::{
+    collections::{HashMap, HashSet},
+    error::Error,
+    fs::File,
+    io::Write,
+    iter::FromIterator,
+};
+use syntect::{
+    dumps::*,
+    highlighting::ThemeSet,
+    parsing::{SyntaxSet, SyntaxSetBuilder},
+};
 
-pub fn dump_languages(package_dir: &str, packpath_newlines: &str) {
+pub fn dump_languages(from_dir: &str, into_file: &str) -> Result<(), Box<dyn Error>> {
     let mut builder = SyntaxSetBuilder::new();
     builder.add_plain_text_syntax();
-    builder.add_from_folder(package_dir, true).unwrap();
-    let ss = builder.build();
-    dump_to_file(&ss, packpath_newlines).unwrap();
-    let mut syntaxes: HashMap<String, HashSet<String>> = HashMap::new();
+    builder.add_from_folder(from_dir, true)?;
+    dump_to_file(&builder.build(), into_file)?;
+    Ok(())
+}
 
-    for s in ss.syntaxes().iter() {
-        syntaxes
+pub fn dump_themes(from_dir: &str, into_file: &str) -> Result<(), Box<dyn Error>> {
+    let ts = ThemeSet::load_from_folder(from_dir)?;
+    dump_to_file(&ts, into_file)?;
+    Ok(())
+}
+
+pub fn write_readme() -> std::io::Result<()> {
+    let syntax: SyntaxSet = from_binary(include_bytes!("../../languages.dump"));
+    let theme: ThemeSet = from_binary(include_bytes!("../../themes.dump"));
+    let mut readme = String::with_capacity(1024);
+    readme.push_str("# Carbon\n");
+    readme.push_str(&format!("## Supported languages ({})\n", syntax.syntaxes().len()));
+    let mut syntax_map: HashMap<String, HashSet<String>> = HashMap::new();
+    for s in syntax.syntaxes() {
+        syntax_map
             .entry(s.name.clone())
             .and_modify(|e| {
                 for ext in &s.file_extensions {
@@ -23,41 +42,31 @@ pub fn dump_languages(package_dir: &str, packpath_newlines: &str) {
             })
             .or_insert_with(|| HashSet::from_iter(s.file_extensions.iter().cloned()));
     }
-    let mut keys = syntaxes.keys().collect::<Vec<_>>();
+    let mut keys = syntax_map.keys().collect::<Vec<_>>();
     keys.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
     for k in keys {
-        if !syntaxes[k].is_empty() {
-            let mut extensions_sorted = syntaxes[k].iter().cloned().collect::<Vec<_>>();
+        if !syntax_map[k].is_empty() {
+            let mut extensions_sorted = syntax_map[k].iter().cloned().collect::<Vec<_>>();
             extensions_sorted.sort();
-            println!("- {} -> {:?}", k, extensions_sorted);
+            readme.push_str(&format!("- **{}:** {}\n", k, extensions_sorted.join(", ")))
         }
     }
-}
-
-pub fn dump_themes(theme_dir: &str, packpath: &str) {
-    let ts = ThemeSet::load_from_folder(theme_dir).unwrap();
-    for path in ts.themes.keys() {
-        println!("- {:?}", path);
+    readme.push_str(&format!("## Supported themes ({})\n", theme.themes.len()));
+    let mut keys = theme.themes.keys().collect::<Vec<_>>();
+    keys.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
+    for k in keys {
+        if let Some(name) = theme.themes[k].name.as_ref() {
+            readme.push_str(&format!("- **{}:** {}\n", name, k))
+        }
     }
-    dump_to_file(&ts, packpath).unwrap();
-}
-
-
-pub fn write_readme() {
-    let syntax: SyntaxSet = from_binary(include_bytes!("../../languages.dump"));
-    let theme: ThemeSet = from_binary(include_bytes!("../../themes.dump"));
-    let mut readme = String::with_capacity(1024);
-    readme.push_str("# Carbon\n");
-    readme.push_str("## Supported languages\n");
-    for s in syntax.syntaxes() {
-        readme.push_str(&format!("- **{}**: {}\n", s.name, s.file_extensions.join(", ")))
-    }
-    println!("{}", readme)
+    let mut file = File::create("readme.md")?;
+    file.write_all(readme.as_bytes())?;
+    Ok(())
 }
 
 #[test]
 fn main() {
-    dump_languages("languages", "languages.dump");
-    dump_themes("themes", "themes.dump");
-    write_readme()
+    dump_languages("languages", "languages.dump").unwrap();
+    dump_themes("themes", "themes.dump").unwrap();
+    write_readme().unwrap();
 }

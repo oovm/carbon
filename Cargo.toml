@@ -2,7 +2,7 @@
 
 members = ["projects/*"]
 default-members = [
-    "projects/carbon-dump",
+#   "projects/carbon-dump",  #   don't build and test in CI
     "projects/carbon-rs",
 ]
 

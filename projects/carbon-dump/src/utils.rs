@@ -1,10 +1,9 @@
-use lazy_static::{self, LazyStatic};
-use syntect::dumps::from_binary;
-use syntect::highlighting::ThemeSet;
-use syntect::parsing::SyntaxSet;
-use lazy_static::lazy::Lazy;
-use std::fmt::{Debug, Formatter};
-use std::fmt;
+use lazy_static::{self, lazy::Lazy, LazyStatic};
+use std::{
+    fmt,
+    fmt::{Debug, Formatter},
+};
+use syntect::{dumps::from_binary, highlighting::ThemeSet, parsing::SyntaxSet};
 
 #[allow(missing_copy_implementations)]
 #[allow(dead_code)]
@@ -18,13 +17,9 @@ pub struct ThemeDump {
     private_field: (),
 }
 
-pub static SYNTAX_SET: SyntaxDump = SyntaxDump {
-    private_field: (),
-};
+pub static SYNTAX_SET: SyntaxDump = SyntaxDump { private_field: () };
 
-pub static THEME_SET: ThemeDump = ThemeDump {
-    private_field: (),
-};
+pub static THEME_SET: ThemeDump = ThemeDump { private_field: () };
 
 impl ::lazy_static::__Deref for SyntaxDump {
     type Target = SyntaxSet;
@@ -58,7 +53,6 @@ impl ::lazy_static::__Deref for ThemeDump {
     }
 }
 
-
 impl LazyStatic for SyntaxDump {
     fn initialize(lazy: &Self) {
         let _ = &**lazy;
@@ -73,13 +67,15 @@ impl LazyStatic for ThemeDump {
 
 impl Debug for SyntaxDump {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        f.debug_map().entries(self.syntaxes().iter().map(|s| (s.name.clone(), s.file_extensions.clone()))).finish()
+        let map = self.syntaxes().iter().map(|s| (s.name.clone(), s.file_extensions.clone()));
+        f.debug_map().entries(map).finish()
     }
 }
 
 impl Debug for ThemeDump {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        f.debug_list().entries(self.themes.iter().map(|(name, _)| name)).finish()
+        let map = self.themes.iter().map(|(name, _)| name);
+        f.debug_list().entries(map).finish()
     }
 }
 
@@ -88,4 +84,3 @@ fn print() {
     println!("{:#?}", SYNTAX_SET);
     println!("{:#?}", THEME_SET);
 }
-

@@ -1,8 +1,5 @@
-mod utils;
 #[cfg(test)]
 mod sublime;
+mod utils;
 
-pub use utils::SYNTAX_SET;
-pub use utils::THEME_SET;
-
-
+pub use utils::{SYNTAX_SET, THEME_SET};
