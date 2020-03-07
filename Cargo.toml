@@ -1,0 +1,8 @@
+[workspace]
+
+members = ["projects/*"]
+default-members = [
+    "projects/carbon-dump",
+    "projects/carbon-rs",
+]
+
