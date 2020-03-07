@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+name: Elm Documentation
+hidden: true
+file_extensions: []
+scope: text.html.mediawiki.elm-documentation
+contexts:
+  main:
+    - match: '\x{FEFF}'
+      comment: Code Block
+      push:
+        - meta_scope: markup.raw.block.elm-documentation
+        - meta_content_scope: markup.raw.block.elm-documentation
+        - match: '\x{FEFF}'
+          pop: true
+        - include: scope:source.elm

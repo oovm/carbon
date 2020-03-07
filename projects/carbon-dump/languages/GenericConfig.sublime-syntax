@@ -1,0 +1,139 @@
+%YAML 1.2
+---
+name: Generic Config
+file_extensions:
+  - cfg
+  - conf
+  - config
+  - ini
+  - pro
+  - mak
+  - mk
+  - Doxyfile
+  - inputrc
+  - .inputrc
+  - dircolors
+  - .dircolors
+  - gitmodules
+  - .gitmodules
+  - gitignore
+  - .gitignore
+  - gitattributes
+  - .gitattributes
+scope: source.genconfig
+contexts:
+  main:
+    # "Color (with alpha): #aacc4322, #bf34fa, #ccc"
+    - match: '(?:(?:^\s*)|\s+)#([a-fA-F0-9]{8}|[a-fA-F0-9]{6}|[a-fA-F0-9]{3})\b'
+      scope: constant.other.genconfig
+
+    # One line comment
+    - match: (?:(?:^\s*)|\s+)(?:(#.*(?:\n)?)|(--\s+.*(?:\n)?)|(\/\/.*(?:\n)?))$
+      captures:
+        1: comment.line.number-sign.genconfig
+        2: comment.line.double-dash.genconfig
+        3: comment.line.double-slash.genconfig
+      scope: meta.comment.genconfig
+
+    # ; one line comment
+    - match: (?:(?:^\s*)|\s+)(;\s*(?=.).*(?:\n)?)$
+      scope: meta.comment.genconfig
+      captures:
+        1: comment.line.number-sign.genconfig
+
+    # IP
+    - match: \b(?:\d+\.){3}\d+(?:(?:\:|\/)\d+)?\b
+      scope: meta.ip.genconfig constant.other.genconfig
+
+    # Number or number with unit (like 10k, 12M, 92dpi etc) and also hex like values 0xdf
+    - match: \b[0-9]+([a-zA-Z]+)?\b
+      scope: constant.numeric.genconfig
+
+    # "function call: name()"
+    - match: \b(\w+)\b\(
+      scope: meta.function.genconfig
+      captures:
+        1: entity.name.function.genconfig
+
+    # Constant
+    - match: \b(?i:true|false)\b
+      scope: constant.language.genconfig
+
+    # Constant
+    - match: \b(?<!-)(?i:on|off|yes|no|null|none|nan)(?!-)\b
+      scope: constant.language.genconfig
+
+    # One line word, or word with following {, or [word] or <word>
+    - match: (?:^\s*(\w+)\s*(?={))|(?:^\s*(\w+)\s*$)|(^\s*\[.*\]\s*$)|(^\s*\<.*\>\s*$)
+      scope: storage.type.genconfig
+
+    - match: '"'
+      push: double_string
+
+    - match: "'"
+      push: single_string
+
+    - match: \\"
+      push: quoted_double_string
+
+    - match: \\'
+      push: quoted_single_string
+
+    # Keywords
+    - match: (^\s*|\b)(?<![.-])(function|define|ifn?def|endif|macro|insertmacro|index|location|alias|include|rewrite|if|then|else|start|stop|restart|with|alert|internal)(?![.-])\b
+      scope: keyword.other.genconfig
+
+    # "Var name: %name, %name%, $name, $name$, ${name}, %{name}, %(name), $(name)"
+    - match: ([\%\$@]{1,2}\{\w+\}[\%\$@]{0,2})|([\%\$@]{1,2}\(\w+\)[\%\$@]{0,2})|([\%\$@]{1,2}\w+[\%\$@]{0,2})
+      scope: storage.source.genconfig
+
+    # "Constant like names (ie in uppercase: NAME, SOME_NAME)"
+    - match: \b[A-Z_][A-Z_0-9]*\b
+      scope: support.constant.genconfig
+
+    # "URL like strings (http://name.org, ssh://111.22.33.4:42)"
+    - match: \b(?:(\w+\:\/\/[^,\s]+)|localhost)\b
+      scope: meta.url.genconfig constant.other.genconfig
+
+    # 'Colorize key in lines like: key = value or key: value or key value'
+    - match: ^\s*(\w[\w\-_]*)\s*(\:|=)?
+      scope: meta.param.genconfig
+      captures:
+        1: variable.parameter.genconfig
+        2: keyword.operator.genconfig
+
+    # RegExp
+    - match: \^.*\$
+      scope: string.regexp.genconfig
+
+    # Operators
+    - match: (!|\~|%|=|\^|\+|\-|\<|\>|\?|\/|\*|\\|\||\:|\.|\,)
+      scope: keyword.operator.genconfig
+
+    # Mime types (text/plain, application/x-javascript etc)
+    - match: \b(?<!/)[\w\-\.\+]+/[\w\-\.\+]+(?!/)\b
+      scope: support.type.genconfig
+
+  double_string:
+      - meta_scope: string.quoted.double.genconfig
+      - match: '"'
+        pop: true
+      - match: \\\s*"
+        scope: constant.character.genconfig
+
+  single_string:
+      - meta_scope: string.quoted.signle.genconfig
+      - match: "'"
+        pop: true
+      - match: \\\s*'
+        scope: constant.character.genconfig
+
+  quoted_double_string:
+      - meta_scope: string.quoted.qdouble.genconfig
+      - match: \\"
+        pop: true
+
+  quoted_single_string:
+      - meta_scope: string.quoted.qsignle.genconfig
+      - match: \\'
+        pop: true

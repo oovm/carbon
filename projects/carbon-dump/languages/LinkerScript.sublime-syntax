@@ -1,0 +1,83 @@
+%YAML 1.2
+---
+name: Linker Script
+file_extensions: [ld]
+scope: source.linker
+
+variables:
+  num_suffix: '[KM]'
+
+contexts:
+  main:
+    - include: comments
+    - include: oct_literals
+    - include: int_literals
+    - include: hex_literals
+    - include: control_keywords
+    - include: symbol_names   # must be included before location_counter
+    - include: location_counter
+
+  comments:
+    - match: /\*
+      scope: punctuation.definition.comment.linker
+      push:
+        - meta_scope: comment.block.linker
+        - match: \*/
+          scope: punctuation.definition.comment.linker
+          pop: true
+
+  oct_literals:
+    - match: \b0[0-7]*{{num_suffix}}?\b
+      scope: constant.numeric.octal.linker
+
+  int_literals:
+    - match: \b[1-9][0-9]*{{num_suffix}}?\b
+      scope: constant.numeric.integer.linker
+
+  hex_literals:
+    - match: \b0[Xx][0-9A-Fa-f]+{{num_suffix}}?\b
+      scope: constant.numeric.hex.linker
+
+  control_keywords:
+    - match: '(?x)
+              \b(?:ABSOLUTE
+                  |ADDR
+                  |ALIGN
+                  |AT
+                  |BLOCK
+                  |BYTE
+                  |CREATE_OBJECT_SYMBOLS
+                  |DEFINED
+                  |ENTRY
+                  |FILL
+                  |LONG
+                  |MEMORY
+                  |NEXT
+                  |OUTPUT_FORMAT
+                  |QUAD
+                  |SECTIONS
+                  |SHORT
+                  |SIZEOF
+                  |SIZEOF_HEADERS)\b'
+      scope: keyword.control.linker
+
+  symbol_names:
+    - match: '(?x)
+              (?:
+                \b[A-Za-z_][A-Za-z_\.0-9\-]*
+              |
+                \B\.[A-Za-z_\.0-9\-]+
+              )'
+      scope: variable.other.linker
+    - match: '"'
+      push:
+        - meta_scope: variable.other.linker
+        - match: '"'
+          pop: true
+        - match: \n
+          scope: invalid.illegal.linker
+          pop: true
+
+  location_counter:
+    - match: \B\.\B
+      scope: variable.language.linker
