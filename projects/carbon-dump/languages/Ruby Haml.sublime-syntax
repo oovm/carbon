@@ -3,7 +3,6 @@
 name: Ruby Haml
 file_extensions:
   - haml
-  - sass
 scope: text.haml
 contexts:
   main:

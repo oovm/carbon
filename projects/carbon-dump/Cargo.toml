@@ -1,6 +1,6 @@
 [package]
 name = "carbon-dump"
-version = "1.1.0"
+version = "1.2.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "..."
 repository = "https://github.com/GalAster/carbon-rs"

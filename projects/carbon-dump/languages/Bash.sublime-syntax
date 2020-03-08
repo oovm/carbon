@@ -24,7 +24,6 @@ file_extensions:
   - .bashrc
   - .profile
   - .textmate_init
-  - .zshrc
 
 first_line_match: |
   (?x)                     # ignore whitespace in this regex
@@ -58,7 +57,7 @@ variables:
   is_path_component: (?=[^\s/]*/)
   is_start_of_arguments: '[`=|&;()<>\s]'
   is_variable: (?=\s*{{nbc}}(?:[({]{{nbc}}[)}])?{{nbc}}=)
-  keyword_boundary_end: (?!=)(?=[^\w_-]|$)
+  keyword_boundary_end: (?!=)(?=[^\w_-])
 
   # A character that, when unquoted, separates words. A metacharacter is a
   # space, tab, newline, or one of the following characters: ‘|’, ‘&’, ‘;’,
@@ -183,9 +182,9 @@ contexts:
       scope: keyword.control.case.begin.shell
       set: [case-body, case-item, case-item-first-character, case-preamble]
     - match: \bcontinue{{keyword_boundary_end}}
-      scope: keyword.control.flow.continue.shell
+      scope: keyword.control.continue.shell
     - match: \bbreak{{keyword_boundary_end}}
-      scope: keyword.control.flow.break.shell
+      scope: keyword.control.break.shell
       set: [cmd-post, cmd-args]
 
   case-preamble:
@@ -271,35 +270,12 @@ contexts:
       captures:
         1: storage.type.function.shell
       push: [funcdef-body, funcdef-parens, funcdef-name]
-    - match: \bcoproc{{keyword_boundary_end}}
-      scope: keyword.other.coproc.shell
-      push: [cmd-post, cmd-args, coproc-body]
 
   funcdef-bt:
     - match: '{{is_function}}'
       captures:
         1: storage.type.function.shell
       push: [funcdef-body-bt, funcdef-parens, funcdef-name]
-    - match: \bcoproc{{keyword_boundary_end}}
-      scope: keyword.other.coproc.shell
-      push: [cmd-post, cmd-args-bt, coproc-body]
-
-  coproc-body:
-    - match: \s*(?=\S+\s*\{)
-      set:
-        - meta_content_scope: entity.name.function.coproc.shell
-        - match: (?=\s*\{)
-          set:
-            - match: \{
-              scope: punctuation.section.braces.begin.shell
-              set:
-                - meta_scope: meta.function.coproc.shell
-                - match: \}
-                  scope: punctuation.section.braces.end.shell
-                  pop: true
-                - include: main
-    - match: ""
-      set: main-with-pop-at-end
 
   funcdef-name:
     - match: \s*
@@ -309,15 +285,14 @@ contexts:
           pop: true
 
   funcdef-parens:
-    - match: (\()\s*(\))
-      captures:
-        1: punctuation.section.parens.begin.shell
-        2: punctuation.section.parens.end.shell
+    - match: \(
+      scope: punctuation.section.parens.begin.shell
+      push:
+        - match: \)
+          scope: punctuation.section.parens.end.shell
+          pop: true
     - match: \{
       scope: punctuation.section.braces.begin.shell
-      pop: true
-    - match: \(
-      scope: punctuation.definition.compound.begin.shell
       pop: true
 
   funcdef-body:
@@ -325,18 +300,12 @@ contexts:
     - match: \}
       scope: punctuation.section.braces.end.shell
       pop: true
-    - match: \)
-      scope: punctuation.definition.compound.end.shell
-      pop: true
     - include: main
 
   funcdef-body-bt:
     - meta_scope: meta.function.shell
     - match: \}
       scope: punctuation.section.braces.end.shell
-      pop: true
-    - match: \)
-      scope: punctuation.definition.compound.end.shell
       pop: true
     - include: main-bt
 
@@ -1036,7 +1005,7 @@ contexts:
         - include: expansion-and-string
     - match: '[*?]'
       scope: keyword.operator.regexp.quantifier.shell
-    - match: \[(?=.*])
+    - match: \[
       scope: keyword.control.regexp.set.begin.shell
       push:
         - match: (?=])

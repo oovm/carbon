@@ -1,0 +1,25 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+name: Perforce Client Specification
+file_extensions:
+  - spec
+  - client
+first_line_match: "# A Perforce"
+scope: source.perforce
+contexts:
+  main:
+    - match: "^(Change|Client|User|Status|Description|Files|Update|Access|Owner|Host|Root|AltRoots|Options|SubmitOptions|LineEnd|View):"
+      scope: keyword.other
+    - match: \b((submit|revert|leave)unchanged)(\+reopen)?\b
+      scope: keyword.control.submitoptions
+    - match: \b(local|unix||mac|win|share)\b
+      scope: keyword.control.lineend
+    - match: \b(((no)?(allwrite|clobber|compress|modtime|rmdir)|(un)?locked))\b
+      scope: keyword.control.options
+    - match: (#).*$\n?
+      scope: comment.line
+      captures:
+        1: punctuation.definition.comment
+    - match: <enter description here>
+      scope: invalid.illegal

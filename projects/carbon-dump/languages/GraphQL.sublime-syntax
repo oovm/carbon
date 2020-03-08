@@ -1,0 +1,174 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: GraphQL
+file_extensions:
+  - graphql
+  - gql
+scope: source.graphql
+contexts:
+  comments:
+    # Comments begin with a '#' and finish at the end of the line
+    - match: '#'
+      scope: punctuation.definition.comment.graphql
+      push: line_comment
+
+  main:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character
+    - match: '"'
+      scope: punctuation.definition.string.begin.graphql
+      push: double_quoted_string
+
+    - include: comments
+
+    # Brace matching
+    - match: '{'
+      push: brackets
+
+    - match: '\('
+      push: parentheses
+
+    # End of Braces
+    - match: '}'
+      scope: invalid.illegal.stray-bracket-end
+
+    - match: '\)'
+      scope: invalid.illegal.stray-parentheses-end
+
+    # Argument Property
+    - match: '(?<=\()\w+(?=\:)'
+      scope: string.property.argument.graphql
+
+    # Property names
+    - match: '\b\w+(?=\:)'
+      scope: string.property.graphql
+
+    # Has Arguments
+    - match: '\b\w+(?=\()'
+      scope: string.property.graphql
+
+    # Built-in Scalar Types
+    - match: '\bID\b'
+      scope: constant.language.id.graphql
+
+    - match: '\bInt\b'
+      scope: constant.language.int.graphql
+
+    - match: '\bString\b'
+      scope: constant.language.string.graphql
+
+    - match: '\bFloat\b'
+      scope: constant.language.float.graphql
+
+    - match: '\bBoolean\b'
+      scope: constant.language.boolean.graphql
+
+    # Numbers
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.graphql
+
+    # Symbols
+    - match: '!'
+      scope: keyword.control.non-null.graphql
+
+    - match: '\|'
+      scope: keyword.control.union.graphql
+
+    - match: '='
+      scope: keyword.operator.assignment.graphql
+
+    # Type Definitions
+    - match: '\btype\b'
+      scope: storage.type.type.graphql
+
+    - match: '\bschema\b'
+      scope: storage.type.schema.graphql
+
+    - match: '\binterface\b'
+      scope: storage.type.interface.graphql
+
+    - match: '\bimplements\b'
+      scope: keyword.operator.implements.graphql
+
+    - match: '\binput\b'
+      scope: storage.type.input.graphql
+
+    - match: '\bfragment\b'
+      scope: storage.type.fragment.graphql
+
+    - match: '\bon\b'
+      scope: storage.type.on.graphql
+
+    - match: '\bscalar\b'
+      scope: storage.type.scalar.graphql
+
+    - match: '\bunion\b'
+      scope: storage.type.union.graphql
+
+    - match: '\benum\b'
+      scope: storage.type.enum.graphql
+
+    # Type Definition Names
+    - match: '(?<=type )\w+\b'
+      scope: meta.type.type
+
+    - match: '(?<=schema )\w+\b'
+      scope: meta.type.schema
+
+    - match: '(?<=interface )\w+\b'
+      scope: meta.type.interface
+
+    - match: '(?<=implements )\w+\b'
+      scope: meta.type.implements meta.type.interface
+
+    - match: '(?<=input )\w+\b'
+      scope: meta.type.input
+
+    - match: '(?<=fragment )\w+\b'
+      scope: meta.type.fragment
+
+    - match: '(?<=on )\w+\b'
+      scope: meta.type.fragment.on meta.type.type
+
+    - match: '(?<=scalar )\w+\b'
+      scope: meta.type.scalar
+
+    - match: '(?<=union )\w+\b'
+      scope: meta.type.union
+
+    - match: '(?<=enum )\w+\b'
+      scope: meta.type.enum
+      push: enums
+
+  brackets:
+    - match: '}'
+      pop: true
+    - include: main
+
+  enums:
+    - match: '\w+'
+      scope: variable.parameter.enum.graphql
+    - match: '}'
+      pop: true
+    - include: comments
+
+  parentheses:
+    - match: '\b\w+(?=\:)'
+      scope: variable.parameter.arguments.graphql
+    - match: '\)'
+      pop: true
+    - include: main
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.graphql
+    - match: '\\.'
+      scope: constant.character.escape.graphql
+    - match: '"'
+      scope: punctuation.definition.string.end.graphql
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.graphql
+    - match: $
+      pop: true

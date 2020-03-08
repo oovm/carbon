@@ -1,28 +1,40 @@
 # Carbon
-## Supported languages (115)
+## Supported languages (149)
 - **ActionScript:** as
 - **AppleScript:** applescript, script editor
+- **arc:** arc
 - **ASP:** asa
+- **ass:** aegisub, ass, ssa
 - **Assembly x86 (NASM):** asm, inc, nasm
 - **Batch File:** bat, cmd
 - **BibTeX:** bib
-- **Bourne Again Shell (bash):** .bash_aliases, .bash_completions, .bash_functions, .bash_login, .bash_logout, .bash_profile, .bash_variables, .bashrc, .profile, .textmate_init, .zshrc, bash, fish, sh, zsh
+- **Bourne Again Shell (bash):** .bash_aliases, .bash_completions, .bash_functions, .bash_login, .bash_logout, .bash_profile, .bash_variables, .bashrc, .profile, .textmate_init, bash, fish, sh, zsh
 - **C:** c, h
 - **C#:** cs, csx
 - **C++:** C, c++, cc, cp, cpp, cxx, h, h++, hh, hpp, hxx, inl, ipp
-- **Clojure:** clj
+- **Cap’n Proto:** capnp
+- **Cg:** cg
+- **Clojure:** clj, cljc, cljs, cljx
 - **CMake:** CMakeLists.txt, cmake
 - **CMake C Header:** h.in
 - **CMake C++ Header:** h++.in, hh.in, hpp.in, hxx.in
+- **CMake Cache:** CMakeCache.txt
+- **CMake Listfile:** CMakeLists.txt, cmake
 - **CMakeCache:** CMakeCache.txt
+- **Crontab:** crontab
 - **Crystal:** cr
 - **CSS:** css, css.erb, css.liquid
 - **D:** d, di
 - **Dart:** dart
 - **Diff:** diff, patch
+- **Dockerfile:** Dockerfile
 - **Elixir:** ex, exs
 - **Elm:** elm
 - **Erlang:** Emakefile, emakefile, erl, hrl
+- **ESSL:** _f.essl, _fs.essl, _v.essl, _vs.essl, essl, f.essl, v.essl
+- **F Sharp:** fs
+- **Forth:** frt, fs
+- **friendly interactive shell (fish):** fish
 - **fsharp:** fs
 - **Generic Config:** .dircolors, .gitattributes, .gitignore, .gitmodules, .inputrc, Doxyfile, cfg, conf, config, dircolors, gitattributes, gitignore, gitmodules, ini, inputrc, mak, mk, pro
 - **Git Attributes:** .gitattributes, attributes, gitattributes
@@ -32,37 +44,48 @@
 - **Git Link:** .git
 - **Git Log:** gitlog
 - **Git Rebase Todo:** git-rebase-todo
+- **GLSL:** comp, frag, fs, fsh, fshader, geom, glsl, gs, gsh, gshader, tesc, tese, vert, vs, vsh, vshader
 - **Go:** go
+- **GraphQL:** gql, graphql
 - **Graphviz (DOT):** DOT, dot, gv
-- **Groovy:** Jenkinsfile, gradle, groovy, gvy
+- **Groovy:** gradle, groovy, gvy
 - **Handlebars:** handlebars, handlebars.html, hbr, hbrs, hbs, hdbs, hjs, mu, mustache, rac, stache, template, tmpl
 - **Haskell:** hs
-- **HTML:** htm, html, shtml, xhtml
+- **HLSL:** fx, fxh, hlsl, hlsli, usf
+- **HTML:** htm, html, shtml, tmpl, tpl, xhtml
 - **HTML (ASP):** asp
 - **HTML (Erlang):** yaws
 - **HTML (Rails):** erb, html.erb, rails, rhtml
 - **HTML (Tcl):** adp
+- **INI:** .editorconfig, CFG, INF, INI, REG, URL, cfg, ini, lng, reg, url
 - **Java:** bsh, java
 - **Java Properties:** properties
 - **Java Server Page (JSP):** jsp
 - **JavaScript:** htc, js
+- **JavaScript (Babel):** babel, es6, js, jsx
 - **JavaScript (Rails):** js.erb
 - **Jinja2:** j2, jinja2
 - **JSON:** json, sublime-build, sublime-color-scheme, sublime-commands, sublime-completions, sublime-keymap, sublime-macro, sublime-menu, sublime-mousemap, sublime-project, sublime-settings, sublime-theme
 - **Julia:** jl
-- **Kotlin:** kt, kts
+- **Kotlin:** jet, jetl, kt
 - **LaTeX:** ltx, tex
-- **Less:** css.less, less
+- **LESS:** less
 - **Linker Script:** ld
 - **Lisp:** cl, clisp, el, fasl, l, lisp, lsp, mud, scm, ss
 - **Literate Haskell:** lhs
+- **lrc:** lrc, lyric
 - **Lua:** lua
-- **Makefile:** GNUmakefile, Makefile, Makefile.am, Makefile.in, OCamlMakefile, mak, make, makefile, makefile.am, makefile.in, mk
+- **Makefile:** GNUmakefile, Makefile, OCamlMakefile, mak, make, makefile, mk
+- **Man:** man
 - **Markdown:** markdn, markdown, md, mdown
 - **MATLAB:** matlab
+- **Maven POM:** pom.xml
+- **Mediawiki:** mediawiki, wiki, wikipedia
 - **MiniZinc (MZN):** dzn, mzn
+- **MSBuild:** csproj, fsproj, msbuild, proj, targets, vbproj, vcxproj
 - **NAnt Build File:** build
 - **Nim:** nim, nims
+- **Ninja:** ninja
 - **Nix:** nix
 - **Objective-C:** h, m
 - **Objective-C++:** M, h, mm
@@ -70,10 +93,13 @@
 - **OCamllex:** mll
 - **OCamlyacc:** mly
 - **Pascal:** dpr, p, pas
+- **Perforce Client Specification:** client, spec
 - **Perl:** PL, pl, pm, pod, t
 - **PHP:** php, php3, php4, php5, php7, phps, phpt, phtml
 - **Plain Text:** txt
+- **Postscript:** eps, ps
 - **PowerShell:** ps1, psd1, psm1
+- **Protocol Buffer:** proto
 - **Python:** SConscript, SConstruct, Sconstruct, Snakefile, cpy, gyp, gypi, pxd, pxd.in, pxi, pxi.in, py, py3, pyi, pyw, pyx, pyx.in, rpy, sconstruct, wscript
 - **R:** R, Rprofile, S, r, s
 - **Rd (R Documentation):** rd
@@ -81,24 +107,32 @@
 - **Regular Expression:** re
 - **reStructuredText:** rest, rst
 - **Ruby:** Appfile, Appraisals, Berksfile, Brewfile, Cheffile, Deliverfile, Fastfile, Gemfile, Guardfile, Rakefile, Rantfile, Scanfile, Snapfile, Thorfile, Vagrantfile, capfile, cgi, config.ru, fcgi, gemspec, irbrc, jbuilder, podspec, prawn, rabl, rake, rb, rbx, rjs, ruby.rail, simplecov, thor
-- **Ruby Haml:** haml, sass
+- **Ruby Haml:** haml
 - **Ruby on Rails:** builder, rxml
 - **Rust:** rs
+- **Sass:** sass, scss
 - **Scala:** sbt, scala
+- **Smalltalk:** st
 - **SQL:** ddl, dml, sql
 - **SQL (Rails):** erbsql, sql.erb
+- **srt:** srt, subrip
+- **Starlark:** bzl
+- **Stylus:** styl, stylus
 - **SWI-Prolog:** pro
 - **Swift:** swift
 - **Tcl:** tcl
 - **TeX:** cls, sty
 - **Textile:** textile
-- **TOML:** tml, toml
+- **Thrift:** thrift
+- **TOML:** Cargo.lock, Gopkg.lock, tml, toml
 - **TypeScript:** ts
 - **TypeScriptReact:** tsx
 - **VimL:** vim
+- **Vue Component:** vue
+- **WolframLanguage:** m, mathematica, mma, nb, wl, wls
 - **XML:** dtml, opml, rss, svg, tld, xml, xsd, xslt
 - **YAML:** sublime-syntax, yaml, yml
-## Supported themes (35)
+## Supported themes (36)
 - **1337:** 1337
 - **Agola Dark:** agola-dark
 - **Ascetic White:** ascetic-white
@@ -126,6 +160,7 @@
 - **Material-Theme-Darker:** material-dark
 - **Material-Theme-Lighter:** material-light
 - **Monokai:** monokai
+- **Nyx Bold:** nyx-bold
 - **One Dark:** one-dark
 - **Solarized (dark):** solarized-dark
 - **Solarized (light):** solarized-light

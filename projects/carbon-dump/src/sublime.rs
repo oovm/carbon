@@ -26,8 +26,8 @@ pub fn dump_themes(from_dir: &str, into_file: &str) -> Result<(), Box<dyn Error>
 }
 
 pub fn write_readme() -> std::io::Result<()> {
-    let syntax: SyntaxSet = from_binary(include_bytes!("../../languages.dump"));
-    let theme: ThemeSet = from_binary(include_bytes!("../../themes.dump"));
+    let syntax: SyntaxSet = from_binary(include_bytes!("../languages.dump"));
+    let theme: ThemeSet = from_binary(include_bytes!("../themes.dump"));
     let mut readme = String::with_capacity(1024);
     readme.push_str("# Carbon\n");
     readme.push_str(&format!("## Supported languages ({})\n", syntax.syntaxes().len()));
@@ -60,6 +60,7 @@ pub fn write_readme() -> std::io::Result<()> {
         }
     }
     let mut file = File::create("readme.md")?;
+    println!("{}", readme);
     file.write_all(readme.as_bytes())?;
     Ok(())
 }

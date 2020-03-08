@@ -77,34 +77,34 @@ contexts:
     - include: statements
 
   embedded-html:
-    - match: (\?>)(\s*\n)?
-      scope: meta.embedded.block.php
+    - match: '\?>(\s*\n)?'
+      scope: meta.embedded.block.php punctuation.section.embedded.end.php
       captures:
-        1: punctuation.section.embedded.end.php
-        2: meta.html-newline-after-php.php
+        1: meta.html-newline-after-php.php
       push:
         - meta_scope: embedding.php text.html.basic
         - clear_scopes: true
-        - match: <\?(?i:php)?
+        - match: '<\?(?i:php)?'
           scope: meta.embedded.block.php punctuation.section.embedded.begin.php
           pop: true
         - match: ''
           with_prototype:
             - include: single-line-php-tag
-            - match: (?=<\?(?i:php)?)
+            - match: '(?=<\?(?i:php)?)'
               pop: true
-          push: scope:text.html.basic
+          push:
+            - include: scope:text.html.basic
 
   single-line-php-tag:
-    - match: (?:<\?=|<\?(?i:php)?(?=.*\?>))
+    - match: '(<\?=|<\?(?i:php)?(?=.*\?>))'
       scope: punctuation.section.embedded.begin.php
       push:
         - meta_scope: meta.embedded.line.nested.php
         - meta_content_scope: source.php
-        - match: (\?>)(\s*\n)?
+        - match: \?>(\s*\n)?
+          scope: punctuation.section.embedded.end.php
           captures:
-            1: punctuation.section.embedded.end.php
-            2: meta.html-newline-after-php.php
+            1: meta.html-newline-after-php.php
           pop: true
         - include: statements
 
@@ -164,11 +164,7 @@ contexts:
             )?
         )
       push:
-        - match: (?=::{{identifier}}\s*\()
-          set:
-            - include: function-call-static
-            - match: ''
-              pop: true
+        - include: function-call-static
         - match: |-
             (?x)(::)
             (?:
@@ -795,15 +791,12 @@ contexts:
         - match: '{{identifier}}'
           scope: variable.function.php
   function-call-static:
-    - match: (::)(?={{identifier}}\s*\()
+    - match: (::)({{identifier}})(?=\s*\()
+      scope: meta.function-call.static.php
       captures:
         1: punctuation.accessor.double-colon.php
-      push:
-        - meta_scope: meta.function-call.static.php
-        - match: (?=\s*\()
-          set: function-call-parameters
-        - match: '{{identifier}}'
-          scope: variable.function.php
+        2: variable.function.php
+      set: function-call-parameters
   function-call-parameters:
     - match: \s*(\()
       scope: meta.function-call.php

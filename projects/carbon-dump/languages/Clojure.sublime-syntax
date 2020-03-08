@@ -5,6 +5,9 @@ name: Clojure
 comment: 'Symbol pattern : [a-zA-Z+!\-_?0-9*~#@''`/.$=]'
 file_extensions:
   - clj
+  - cljs
+  - cljc
+  - cljx
 scope: source.clojure
 contexts:
   main:
