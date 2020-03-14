@@ -4,10 +4,12 @@ pub struct Config {
     pub html_font: String,
     pub html_type: CarbonHTML,
     pub file_title: Option<String>,
-    pub line_number : bool
+    pub line_number: bool,
 }
 
 pub enum CarbonHTML {
+    /// inline
+    Inline,
     /// single
     Embedded,
     /// Full html
@@ -28,7 +30,7 @@ impl Default for Config {
             html_font: String::from(FONT_CSS.replace('\n', "")),
             html_type: CarbonHTML::Independent,
             file_title: None,
-            line_number: false
+            line_number: false,
         }
     }
 }

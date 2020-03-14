@@ -45,8 +45,13 @@ impl Config {
         // The main process of the program
         let mut out = String::with_capacity(25 * input.len());
         let c = theme.settings.background.unwrap_or(Color::WHITE);
-        let render = if self.line_number {  html_render_line_number} else { html_render_line };
+        let render = if self.line_number { html_render_line_number } else { html_render_line };
         match self.html_type {
+            CarbonHTML::Inline => {
+                out.push_str( "<pre class=\"carbon\">");
+                out.push_str(&render(input, syntax, theme));
+                out.push_str(&format!("</pre>"));
+            },
             CarbonHTML::Embedded => {
                 match &self.file_title {
                     None => {
