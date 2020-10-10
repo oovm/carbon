@@ -1,6 +1,6 @@
 [package]
 name = "carbon-lib"
-version = "0.2.1"
+version = "0.3.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "..."
 repository = "https://github.com/nyar-lang/Notedown-rs"
@@ -9,7 +9,15 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-syntect = "3.2"
-lazy_static = "1.4.0"
-carbon-dump = "1.2.0"
+lazy_static = "1.4"
 
+
+[dependencies.syntect]
+version = "4.4"
+# default-features = false
+# features = ["default-fancy"]
+
+
+[dependencies.carbon-dump]
+version = "1.2"
+path = "../carbon-dump"

@@ -1,6 +1,6 @@
 [package]
 name = "carbon-dump"
-version = "1.2.0"
+version = "1.2.1"
 authors = ["Aster <192607617@qq.com>"]
 description = "..."
 repository = "https://github.com/GalAster/carbon-rs"
@@ -16,9 +16,11 @@ include = [
 
 
 [dependencies]
-syntect = "3.2"
-lazy_static = "1.4.0"
+lazy_static = "1.4"
 
-
+[dependencies.syntect]
+version = "4.4"
+# default-features = false
+# features = ["default-fancy"]
 
 

@@ -1,10 +1,15 @@
-use syntect::parsing::{SyntaxSet, SyntaxReference};
-use syntect::highlighting::{Theme, Style};
-use syntect::html::{start_highlighted_html_snippet, IncludeBackground, append_highlighted_html_for_styled_line, styled_line_to_highlighted_html};
-use syntect::easy::HighlightLines;
-use syntect::util::LinesWithEndings;
-use carbon_dump::{SYNTAX_SET, THEME_SET};
+use carbon_dump::SYNTAX_SET;
 use std::ops::Deref;
+use syntect::{
+    easy::HighlightLines,
+    highlighting::Theme,
+    html::{
+        append_highlighted_html_for_styled_line, start_highlighted_html_snippet, styled_line_to_highlighted_html,
+        IncludeBackground,
+    },
+    parsing::SyntaxReference,
+    util::LinesWithEndings,
+};
 
 pub fn html_render_line(s: &str, syntax: &SyntaxReference, theme: &Theme) -> String {
     let mut highlighter = HighlightLines::new(syntax, theme);
@@ -47,8 +52,12 @@ pub fn html_fancy_box(s: &str, title: &Option<String>) -> String {
         <div class="controls"><div class="circle red"></div><div class="circle yellow"></div><div class="circle green"></div>{}</div>
         <div class="content">{}</div></div>"#,
         match title {
-            Some(s) => { format!(r#"<div class="title">{}</div>"#, s) }
-            None => { String::new() }
+            Some(s) => {
+                format!(r#"<div class="title">{}</div>"#, s)
+            }
+            None => {
+                String::new()
+            }
         },
         s
     )
